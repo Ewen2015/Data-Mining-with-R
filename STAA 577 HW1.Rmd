@@ -1,0 +1,216 @@
+---
+title: "STAA 577 HW1"
+author: "Enqun Wang"
+date: "March 21, 2016"
+output: html_document
+---
+
+Enter the following matrix into R
+
+```{r }
+set.seed(2016)
+A = matrix(rnorm(4*3), nrow=4, ncol=3)
+```
+
+**1.** R question: Suppose we want to get the column mean for each column of the matrix A. Do this with
+
+\(a) Hard coding (that is, write ($(A[1, 1] + A[2, 1] + ...)/4, ...$)
+
+```{r 1a, message = F}
+mean.col1 = (A[1, 1] + A[2, 1] + A[3, 1] + A[4, 1])/4
+mean.col2 = (A[1, 2] + A[2, 2] + A[3, 2] + A[4, 2])/4
+mean.col3 = (A[1, 3] + A[2, 3] + A[3, 3] + A[4, 3])/4
+
+mean.col = data.frame(col = 1:3, mean = c(mean.col1, mean.col2, mean.col3))
+
+require(knitr)
+kable(mean.col, align = "l")
+```
+
+\(b) For loop(s)
+
+```{r 1b}
+mean.col = c()
+for(i in 1:3){
+  S = 0
+  for(j in 1:4){
+    S = S + A[j, i]
+  }
+  mean.col[i] = S/4
+}
+kable(data.frame(col = 1:3, mean = mean.col), align = "l")
+```
+
+\(c) The apply (or related) function
+
+```{r 1c}
+kable(data.frame(col = 1:3, mean = apply(A, 2, mean)), align = "l")
+```
+
+Note: the intention of this question is just to make sure everyone has these key tools in their R toolbox
+
+---
+
+**2.** Many statistical methods can be computed/analyzed using the SVD. Let's look at solving least squares problems as they are fundamental to modern data analysis.
+
+\(a) We will first explore the *overdetermined* case using the above A. Write $A = UDV^T$ (that is, form `svd.out = svd(A)`). Type `svd.out` into the `R` interpreter. What does it produce?
+
+```{r 2a1}
+svd.out = svd(A)
+svd.out
+```
+Suppose we wish to solve for $\hat{x} = arg min_x \|Ax-b\|^2_2=(A^TA)^{-1}A^Tb$ for $b = (1, 1, 1, 1)^T$
+
+As an aside, to show this, note that
+
+$$\|Ax-b\|^2_2=x^TA^TAx + b^Tb - 2x^TA^Tb$$
+$$\Rightarrow \nabla_x = 2A^TA\hat{x} - 2A^Tb \doteq 0 $$
+$$\Rightarrow \hat{x} = (A^TA)^{-1}A^Tb$$
+
+How can I solve this using the SVD? Here, let's follow the steps:
+
+i. Form $U^Tb$
+ii. Solve $Dw = U^Tb$
+iii. Form $\hat{x} = Vw$
+
+Produce this $\hat{x}$ in `R` via this method. Note that in this particular case, all the singular values in $D$ are nonzero and hence $\hat{x} = VD^{-1}U^Tb$.
+
+```{r 2a2}
+b = matrix(c(1, 1, 1, 1), byrow = F)
+U = t(svd.out$u)
+D = diag(svd.out$d)
+V = svd.out$v
+
+Utb = U %*% b
+w = solve(D) %*% Utb
+x.hat = V %*% w
+x.hat
+```
+
+\(b) Suppose instead we have observations under the model $Y = \mathbb{X}\beta + \epsilon$, where $Y = b$ and $\mathbb{X} = A$. Using the `R` function `lm` and `predict`, what is the least squares solution $\hat{\beta}$ and the fitted values $\hat{Y}$ for $Y$ using the least squares solution?(Remember to not use an intercept)
+
+```{r 2b1}
+Y = b; X = A
+
+fit = lm(Y ~ 0 + X)
+fit$coefficients # beta.hat
+predict(fit) # Y.hat
+```
+
+Derive the formula for $\hat{Y} = \mathbb{X}\hat{\beta}$ in terms of the SVD and the response $Y$.
+
+$$\hat{Y} = \mathbb{X}\hat{\beta}$$
+$$\Rightarrow \hat{Y} = A(A^TA)^{-1}A^TY$$
+$$\Rightarrow \hat{Y} = UDV^T((UDV^T)^TUDV^T)^{-1}(UDV^T)^TY$$
+$$\Rightarrow \hat{Y} = Y$$
+
+How does the produced coefficient vector $\hat{\beta}$ compare the $\hat{x}$?
+
+- The produced coefficient vector $\hat{\beta}$ is the same as $\hat{x}$.
+
+---
+
+**3.** Now, let's look at a new A
+
+```{r 3}
+set.seed(2016)
+A = matrix(rnorm(4*3), ncol=4, nrow=3)
+```
+
+and $b = (1, 1, 1)^T$. This is an example of an *underdetermined* system.
+
+\(a) What do(es) the corresponding $\hat{x}$ look like using the SVD? What do(es) the $\hat{\beta}$ look like using `lm`?
+
+```{r 3a, message = F}
+svd.out = svd(A)
+b = matrix(c(1, 1, 1), byrow = F)
+U = t(svd.out$u)
+D = diag(svd.out$d)
+V = svd.out$v
+
+Utb = U %*% b
+w = solve(D) %*% Utb
+x.hat = V %*% w
+x.hat
+
+Y = b; X = A
+fit = lm(Y ~ 0 + X)
+fit$coefficients # beta.hat
+```
+
+\(b) What do(es) the corresponding $A\hat{x}$ look like using the SVD? What do(es) the $\hat{Y} = \mathbb{X}\hat{\beta}$ look like using `predict`?
+
+```{r 3b}
+A %*% x.hat
+
+predict(fit) # Y.hat
+```
+
+\(c) Though this is just one simulated example and not a proof, your findings generalize to all situations when $p > n$. Summarize in words what these findings are.
+
+- In the high dimensional regime ($p > n$), the solutions of $Y = \mathbb{X}\hat{\beta}$ are not unique, and it has an infinite number of solutions.
+
+---
+
+**4.** We will discuss more about R's memory, but suffice it to say that it has about 2 Gb of workable space. This can readily be exhausted. A tool for fitting least squares with R under memory constraints is `biglm`. For this problem, we will generate an object that is still able to be placed in memory, but this is for comparison's sake only. Do the following:
+
+```{r 4}
+n = 2000
+p = 500
+set.seed(2016)
+X = matrix(rnorm(n*p), nrow=n, ncol=p)
+
+format(object.size(X),units='auto') #memory used by X
+
+Xdf = data.frame(X)
+
+Y = X %*% rnorm(p) + rnorm(n)
+
+write.table(X[1:500,],file='Xchunk1.txt',sep=',',row.names=F,col.names=names(Xdf))
+write.table(X[501:1000,],file='Xchunk2.txt',sep=',',row.names=F,col.names=names(Xdf))
+write.table(X[1001:1500,],file='Xchunk3.txt',sep=',',row.names=F,col.names=names(Xdf))
+write.table(X[1501:2000,],file='Xchunk4.txt',sep=',',row.names=F,col.names=names(Xdf))
+
+write.table(Y[1:500],file='Ychunk1.txt',sep=',',row.names=F,col.names=F)
+write.table(Y[501:1000],file='Ychunk2.txt',sep=',',row.names=F,col.names=F)
+write.table(Y[1001:1500],file='Ychunk3.txt',sep=',',row.names=F,col.names=F)
+write.table(Y[1501:2000],file='Ychunk4.txt',sep=',',row.names=F,col.names=F)
+```
+
+\(a) Report the first 6 entries in $\hat{\beta}$ using `lm` on all the data simultaneously.
+
+```{r 4a}
+fit = lm(Y ~ 0 + X)
+round(head(fit$coefficients), 5) # beta.hat
+```
+
+\(b) Alternatively, we can read in each chunk and update the solution using `biglm`. Here is the first part. Complete the procedure in the natural way on the remaining chunks.
+
+```{r, 4b, message = F}
+require(biglm)
+
+Xchunk = read.table(file='Xchunk1.txt',sep=',',header=T)
+Ychunk = scan(file='Ychunk1.txt',sep=',')
+
+form = as.formula(paste('Ychunk ~ -1 + ',paste(names(Xchunk),collapse=' + '),
+  collapse=''))
+out.biglm = biglm(formula = form,data=Xchunk)
+
+Xchunk = read.table(file='Xchunk2.txt',sep=',',header=T)
+Ychunk = scan(file='Ychunk2.txt',sep=',')
+out.biglm = update(out.biglm,moredata=Xchunk)
+
+Xchunk = read.table(file='Xchunk3.txt',sep=',',header=T)
+Ychunk = scan(file='Ychunk3.txt',sep=',')
+out.biglm = update(out.biglm,moredata=Xchunk)
+
+Xchunk = read.table(file='Xchunk4.txt',sep=',',header=T)
+Ychunk = scan(file='Ychunk4.txt',sep=',')
+out.biglm = update(out.biglm,moredata=Xchunk)
+
+round(head(out.biglm$qr$thetab), 5)
+```
+
+Compare the first 6 entries in $\hat{\beta}$ formed by this method with the entries in (a).
+
+- The two methods generate slightly different results. 
