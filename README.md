@@ -1,2 +1,3 @@
-# StatisticalLearningR
-My statistical learning notes.
+# Machine Learning Notes
+
+My statistical learning and machine learning notes. 
