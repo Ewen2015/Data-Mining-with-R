@@ -25,7 +25,7 @@ def main():
     sns.set_context('notebook')
     sns.set_style('white')
     
-    df = pd.read_csv("/Users/ewenwang/Downloads/Hitters.csv").dropna()
+    df = pd.read_csv("/Users/ewenwang/Dropbox/Data Science/SLML/Statistical Learning and Data Mining/ISL/Hitters.csv").dropna()
     df.info()
     
     X = df[['Years', 'Hits']].as_matrix()
