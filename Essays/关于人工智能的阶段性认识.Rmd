@@ -1,0 +1,74 @@
+---
+title: "关于人工智能的阶段性认识"
+author: "Ewen Wang"
+date: "April 16, 2016"
+output: html_document
+---
+
+
+Statistical learning (统计学习) 或者 machine learning (机器学习) 是 artificial intelligence (AI，人工智能) 前沿的学科，前者基于 statistics 的基础发展而来，后者则是由 computer science (计算机科学) 衍生而出。二者不断融合发展，共同为 AI 添砖加瓦；此外，其它学科的知识也在不断被拿来借鉴：数学无疑是任何学科高级发展的基础，生物医学等对人类大脑的研究也贡献于 artificial neural network (人工神经网络)，诸如此类，不胜枚举。一句题外话，有些人，刻意区分 statistical learning 与 machine learning 并且还划分派别，其实毫无益处，我们的目的是解决问题，不是创造饭后谈资，更不是卖弄学识。
+
+---
+
+#### Logic Behind Statistical Learning and Machine Learning 逻辑
+
+对于 statistical learning 或者 statistics 而言，建立模型是最基本的出发点。但无可争议的一点是：**永远没有完美的模型**。基于这个原因，才发展出了 “learning”。而 learning ，包括statistical learning 或者 machine learning，所运用的最基本 philosophy 是－－optimize (最优化)，其对象是 Loss (损失)，受到 Penalty (罚项) 的约束。其 Lagrange 形式是：
+
+$$arg min \{Loss + Penalty\}$$
+
+具体而言。模型基于**已有数据**建立，而 loss 指模型在预测**已有数据**值时与实际值的差的总和。我们总是期望最小化这种损失，但随之而来的风险是，如果我们最小化模型对**已有数据**的损失时，当我们建立的模型面对**新的数据**时，其预测能力会很差，即 overfitting (过拟合)。基于这个原因，我们加上了 Penalty (罚项)，来降低模型的复杂程度，以得到更有预测能力的模型。这便是 statistical learning 或者 machine learning 的 logic，**基于条件约束的最优化问题**。
+
+---
+
+#### Models or Optimizations 模型或最优化
+
+基于以上理解，我们对问题的解决方法有了基本的理解：简单模型或最优化。简单模型是人造的，易于解释，却不可避免地面临低预测能力的风险。最优化则是天然的，或者说数学的，它有高的预测能力，虽然很多情况下难以解释其中具体含义。
+
+---
+
+#### Artificial Neural Network and Brains 人工神经网络及大脑
+
+居于 machine learning 最前沿一部分之一的领域是 nueral network (神经网络) 或 deep learning (深度学习)。这个部分基于目前人类对于大脑处理信息方法的认识，建立人工智能的处理问题方法。
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vyNkAuX29OU" frameborder="0" allowfullscreen></iframe>
+
+> The nervous system is a network of cells called neurons which transmit information in the form of electrical signals. Your brain has **around 100 billion neurons**, and each communicates with thousands of others – as many connections as in the world's telephone system, the biggest machine on the planet. Neurons communicate with each other at special junctions where chemicals help to bridge the gap between one neuron and the next. 
+
+> **The electrical signals** (nerve impulses) carried by neurons are passed on to other neurons at junctions called synapses. The signal may be directly transferred at electrical synapses or, if there is no physical link between adjacent neurons, the signal is carried across the gap by chemicals called neurotransmitters. By using neurotransmitters, the nervous system can alter the way a message is passed on. Each neuron communicates with many others and this contributes to the amazing complexity of the brain.
+
+以上来自<a href="http://www.sciencemuseum.org.uk/whoami/findoutmore/yourbrain">Your Brain</a>，简单描述了人类大脑由约十万亿个神经元组成，每一个与上千个其他神经元连接，其规模相当于全世界的电话系统；神经传导通过简单的电信号传导。Deep learning 已经可以简单模拟出神经元并运用处理问题，但像人类大脑规模的还没有实现。一个简单的 nueral network 解决分类问题的可视化模型可以在<a href="https://www.tensorflow.org/">Tensorflow</a>找到。
+
+Deep learning 所用的方法是最优化。如果我们相信人类智能的产生基于物质，我们跟随相同的逻辑，应该相信人类可以创造出与人类智能相当的人工智能，甚至是更高级的智能。
+
+---
+
+#### Religon and Philosophy 宗教与哲学
+
+基于以上理解，自然会提出以下问题：
+
+- 最优化的方法是宇宙的最基本规则吗？
+
+- 根据 Freud (弗洛伊德) 的理论，生物包括人的两个原动力是生存和繁衍。我们是否可以把这看成最优化问题，约束条件则是我们的生活环境，包括文化、宗教、地域、个人经历、健康状况等等。
+
+我们的约束也是构成我们的一部分，我们的所见所闻所感所学，都独一无二地构成了我们自己。每一个人都在最优化一个目标，而这个目标也基于个人的经历与局限。生命中不可承受之轻，便是最优化方程中的 penalty, 没有了它最优化也就没有了意义。人性的枷锁，也是人的不可或缺的组成部分。
+
+哲学问题，由此观之，也是最优化问题；具体可以参考<a href="https://en.wikipedia.org/wiki/Immanuel_Kant#Philosophy">Kant (康德)</a> 的哲学理论。做人，快乐最重要，这种快乐也是有约束的，如果是短暂的、对自己或他人造成伤害的快乐，便不能实现。人若没有梦想，和咸鱼有什么区别，但梦想也不是人的全部，基本的人权或者欲望得不到满足，梦想便是妄谈。**So, feel free to be a human being.**
+
+- 人类可以创造智能，以计算机的形式。人类是否也是被创造的，以细胞生物的形式？创造人类的造物主，其智能水平是否高于人类？
+
+- 智能的形式是否只有一种？智能是否有上限？
+
+- 如果人类可以创造高于人类智能的机器，人类是否会依然创造它们？
+
+---
+
+#### Books 推荐书籍
+
+<a href="http://www-bcf.usc.edu/~gareth/ISL/">**An Introduction to Statistical Learning**</a> 官方提供免费下载。
+
+<img src="http://www-bcf.usc.edu/~gareth/ISL/ISL%20Cover%202.jpg" height="160" width="100"></img>
+
+
+
+
+
