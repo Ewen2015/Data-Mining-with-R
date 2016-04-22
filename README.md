@@ -1,3 +1,3 @@
-# Machine Learning Notes
+# Statistical Learning and Machine Learning Notes
 
-My statistical learning and machine learning notes. 
+This is my statistical learning and machine learning notes. 
