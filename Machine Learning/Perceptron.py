@@ -18,7 +18,7 @@ sc.fit(X_train)
 X_train_std = sc.transform(X_train)
 X_test_std = sc.transform(X_test)
 
-# Train a perceptron model
+# Train a perceptron m
 from sklearn.linear_model import Perceptron
 ppn = Perceptron(n_iter = 40, eta0 = 0.1, random_state = 0)
 ppn.fit(X_train_std, y_train)
@@ -34,6 +34,10 @@ print('Accuracy: %.2f' % accuracy_score(y_test, y_pred))
 # Plot
 from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt;
+import seaborn as sns
+
+sns.set_context('notebook')
+sns.set_style('white')
 
 def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
 
