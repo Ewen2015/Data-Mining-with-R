@@ -1,5 +1,3 @@
-
-
 # =====================================
 # Implementing a perceptron learning algorithm in Python
 import numpy as np
@@ -58,7 +56,7 @@ class Perceptron(object):
     def net_input(self, X):
         """Calculate net input"""
         return np.dot(X, self.w_[1:]) + self.w_[0]
- 
+
     def predict(self, X):
         """Return class label after unit step"""
         return np.where(self.net_input(X) >= 0.0, 1, -1)
@@ -144,6 +142,7 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
         plt.scatter(x=X[y == cl, 0], y=X[y == cl, 1],
                     alpha=0.8, c=cmap(idx),
                     marker=markers[idx], label=cl)
+
 
 plot_decision_regions(X, y, classifier=ppn)
 plt.xlabel('sepal length [cm]')
