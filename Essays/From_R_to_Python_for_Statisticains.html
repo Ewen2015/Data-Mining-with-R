@@ -125,60 +125,7 @@ $(document).ready(function () {
 
 <div id="from-r-to-python-for-statisticains" class="section level3">
 <h3>From R to Python for Statisticains</h3>
-<div id="data-structure" class="section level4">
-<h4>Data Structure</h4>
-<p><a href="http://adv-r.had.co.nz/Data-structures.html">Advanced R:</a> R’s base data structures can be organised by their dimensionality (1d, 2d, or nd) and whether they’re homogeneous (all contents must be of the same type) or heterogeneous (the contents can be of different types). This gives rise to the five data types most often used in data analysis:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">dimensionality</th>
-<th align="left">Homogeneous</th>
-<th align="left">Heterogeneous</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">1d</td>
-<td align="left">Atomic vector</td>
-<td align="left">List</td>
-</tr>
-<tr class="even">
-<td align="left">2d</td>
-<td align="left">Matrix</td>
-<td align="left">Data frame</td>
-</tr>
-<tr class="odd">
-<td align="left">nd</td>
-<td align="left">Array</td>
-</tr>
-</tbody>
-</table>
-<ol style="list-style-type: decimal">
-<li>Vector</li>
-</ol>
-<pre class="r"><code>v = c(2, 3, 4, 5)
-v</code></pre>
-<pre><code>## [1] 2 3 4 5</code></pre>
-<pre class="python"><code>import numpy as np
-
-v = np.array([2, 3, 4, 5])
-print(v)</code></pre>
-<pre><code>## [2 3 4 5]</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Matrix</li>
-</ol>
-<pre class="r"><code>m = matrix(c(2, 3, 4, 5), byrow = T, nrow = 2)
-m</code></pre>
-<pre><code>##      [,1] [,2]
-## [1,]    2    3
-## [2,]    4    5</code></pre>
-<pre class="python"><code>import numpy as np
-
-m = np.array([[2, 3], [4, 5]])
-print(m)</code></pre>
-<pre><code>## [[2 3]
-##  [4 5]]</code></pre>
-</div>
+<p>The syntax of R is excellent for data analysis. However, Python can limit the way people think about data analysis. These are results from the emphasis of the two languages: one is function oriented and the later one is object oriented (OO).</p>
 </div>
 
 
