@@ -1,0 +1,55 @@
+---
+title: "From R to Python for Statisticians"
+author: "Enqun Wang"
+date: "April 28, 2016"
+output: html_document
+---
+
+### From R to Python for Statisticains
+
+#### Data Structure
+
+<a href="http://adv-r.had.co.nz/Data-structures.html">Advanced R:</a> R’s base data structures can be organised by their dimensionality (1d, 2d, or nd) and whether they’re homogeneous (all contents must be of the same type) or heterogeneous (the contents can be of different types). This gives rise to the five data types most often used in data analysis:
+
+|dimensionality |Homogeneous |Heterogeneous|
+|---|---|---|
+|1d	|Atomic vector |List|
+|2d	|Matrix	|Data frame|
+|nd	|Array |
+
+1. Vector
+
+```{r}
+v = c(2, 3, 4, 5)
+v
+```
+
+```{python}
+import numpy as np
+
+v = np.array([2, 3, 4, 5])
+print(v)
+```
+
+2. Matrix
+
+```{r}
+m = matrix(c(2, 3, 4, 5), byrow = T, nrow = 2)
+m
+```
+
+```{python}
+import numpy as np
+
+m = np.array([[2, 3], [4, 5]])
+print(m)
+```
+
+
+
+
+
+
+
+
+
